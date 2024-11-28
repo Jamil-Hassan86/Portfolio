@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+</head>
+<body>
+    <h1>Movie Search</h1>
+
+    <form action="results" method="get">
+        <input type="text" name="title" placeholder="Search for a movie" required>
+        <button type="submit">Search</button>
+    </form>
+    
+    <ul>
+        <% if (movies.length > 0) { %>
+            <% movies.forEach(movie => { %>
+                <li>
+                    <strong><%= movie.title %></strong>
+                    <p>Release Year: <%= movie.releaseYear %></p>
+                    <% if (movie.image) { %>
+                        <img src="<%= movie.image %>" alt="<%= movie.title %>" style="width: 100px;">
+                    <% } else { %>
+                        <p>No Image Available</p>
+                    <% } %>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <p>No results found.</p>
+        <% } %>
+    </ul>
+
+</body>
+</html>
