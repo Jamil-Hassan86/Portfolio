@@ -3,7 +3,8 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
     const username = req.session.userId || null;
-    res.render('index.ejs', { username });
+    const alertMessage = req.query.alert;
+    res.render('index.ejs', { username, alert: alertMessage });
 });
 
 router.get('/about', (req, res, next) => {

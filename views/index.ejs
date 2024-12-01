@@ -4,18 +4,23 @@
     <title>Welcome to <%= appData.appName %></title>
     <link rel="stylesheet"  type="text/css" href="/styles.css" />
   </head>
+  <% if (alert) { %>
+    <script>
+        alert('<%= alert %>');
+    </script>
+  <% } %>
   <body>
     <h1>This is <%= appData.appName %></h1>
     <p><a href="about">About <%= appData.appName %></a></p>
-    <p><a href="users/register">Register with us</a></p>
     <p><a href="movies/search">Search</a></p>
     <br><br>
     <% if (username) { %>
       <p>Hello, <%= username %>!</p>
       <a href="/users/logout">Logout</a>
     <% } else { %>
-      <p>Please log in to access your account.</p>
+      <p>Please log in to access your account or register.</p>
       <a href="/users/login">Login</a>
+      <p><a href="users/register">Register with us</a></p>
     <% } %>
   </body>
 </html>

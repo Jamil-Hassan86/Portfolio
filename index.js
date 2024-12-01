@@ -3,6 +3,7 @@ var ejs = require('ejs')
 var session = require ('express-session')
 var validator = require('express-validator')
 const expressSanitizer = require('express-sanitizer')
+const expressRateLimit = require('express-rate-limit')
 
 
 //Import mysql module
@@ -48,6 +49,16 @@ global.db = db
 
 // Define our application-specific data
 app.locals.appData = {appName: "Movie-Rater"}
+
+const searchLimit = expressRateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 5,
+    handler: (req, res) => {
+        res.redirect('/?alert=You+have+been+rate-limited.++Returning+to+home+page.');
+    }
+})
+
+app.use('/movies/results', searchLimit);
 
 // Import route files
 const mainRoutes = require('./routes/main');
