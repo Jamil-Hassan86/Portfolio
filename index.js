@@ -46,6 +46,9 @@ db.connect((err) => {
 })
 global.db = db
 
+// Define our application-specific data
+app.locals.appData = {appName: "Movie-Rater"}
+
 // Import route files
 const mainRoutes = require('./routes/main');
 const movieRoutes = require('./routes/movies');
@@ -58,3 +61,5 @@ app.use('/users', userRoutes);
 
 // Start the app
 app.listen(port, () => console.log(`Node app listening on port ${port}!`));
+
+module.exports = db;

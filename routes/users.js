@@ -52,7 +52,8 @@ router.post('/registered', [check('email').isEmail()], [check('password').isLeng
 
 
 router.get('/login', (req, res, next) => {
-    res.render('login.ejs')                                                               
+    res.render('login.ejs')   
+                                                              
 })
 
 router.post('/loggedin', function(req, res, next){

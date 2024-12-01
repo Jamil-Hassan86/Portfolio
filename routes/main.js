@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    res.render('index.ejs');
+    const username = req.session.userId || null;
+    res.render('index.ejs', { username });
 });
 
 router.get('/about', (req, res, next) => {

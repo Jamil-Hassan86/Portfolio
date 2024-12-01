@@ -7,3 +7,6 @@ CREATE TABLE IF NOT EXISTS user_details (id INT AUTO_INCREMENT PRIMARY KEY, user
 
 CREATE USER IF NOT EXISTS 'movie_rater_app'@'localhost' IDENTIFIED BY 'minecraft'; 
 GRANT ALL PRIVILEGES ON movie_app.* TO ' movie_rater_app'@'localhost';
+
+CREATE TABLE IF NOT EXISTS reviews (id INT AUTO_INCREMENT PRIMARY KEY,user_id INT NOT NULL,movie_id VARCHAR(50) NOT NULL,review_text TEXT,rating INT CHECK (rating BETWEEN 1 AND 5),created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMPFOREIGN KEY (user_id) REFERENCES user_details(id)
+);
