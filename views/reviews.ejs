@@ -11,6 +11,10 @@
             <img src="<%= movieImage %>" alt="<%= movieTitle %>" width="200" />
             <% } %>
         </div>
+
+        <div>
+            <h3>Average Rating: <%= avgRating %></h3>
+        </div>
         
         <h2>Reviews</h2>
         <% if (reviews.length > 0) { %>
@@ -18,14 +22,31 @@
             <div>
                 <p><strong><%= review.username %>:</strong> <%= review.review_text %></p>
                 <p>Rating: <%= review.rating %>/5</p>
-                <p>Posted on: <%= review.created_at %></p>
+                <p>Posted on: <%= new Date(review.created_at).toLocaleDateString() %></p>
+                <br><br>
+                
+                <% if (review.user_id == userId) { %>
+                    
+                    
+                    <a href="/movies/<%= movieId %>/reviews/edit/<%= review.id %>?movieId=<%= movieId %>&userId=<%= userId %>&movieImage=<%= encodeURIComponent(movieImage) %>&movieTitle=<%= encodeURIComponent(movieTitle) %>">Edit</a>
+                    
+                    
+                    <form action="/movies/<%= movieId %>/reviews/delete/<%= review.user_id %>" method="POST" style="display:inline;">
+                        <input type="hidden" name="movieId" value="<%= movieId %>">
+                        <input type="hidden" name="userId" value="<%= userId %>">
+                        <input type="hidden" name="reviewId" value="<%= review.id %>">
+                        <input type="hidden" name="movieImage" value="<%= movieImage %>">
+                        <input type="hidden" name="movieTitle" value="<%= movieTitle %>">
+                        <button type="submit">Delete</button>
+                    </form>
+                <% } %>
+                <br><br>
             </div>
             <% }) %>
         <% } else { %>
             <p>No reviews yet. Be the first to review!</p>
         <% } %>
 
-        <!-- Add a new review -->
         <form action="/movies/<%= movieId %>/reviews" method="POST">
             <textarea name="review_text" placeholder="Write your review here" required></textarea>
             <br>
@@ -36,5 +57,7 @@
             <input type="hidden" name="movieTitle" value="<%= movieTitle %>">
             <button type="submit">Submit</button>
         </form>
+        <br><br>
+        <a href="/">Back to Home</a>
     </body>    
 </html>

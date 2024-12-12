@@ -13,10 +13,12 @@
     <h1>This is <%= appData.appName %></h1>
     <p><a href="about">About <%= appData.appName %></a></p>
     <p><a href="movies/search">Search</a></p>
+    <p><a href="/users/userSearch">View reviews from other users</a></p>
     <br><br>
     <% if (username) { %>
       <p>Hello, <%= username %>!</p>
-      <a href="/users/logout">Logout</a>
+      <p><a href="/users/<%= username %>/reviews">View my reviews</a></p>
+      <p><a href="/users/logout">Logout</a></p>
     <% } else { %>
       <p>Please log in to access your account or register.</p>
       <a href="/users/login">Login</a>

@@ -1,0 +1,25 @@
+<!doctype html>
+<head>
+    <title><%= username %>'s Reviews</title>
+    <link rel="stylesheet"  type="text/css" href="/styles.css" />
+</head>
+<body>
+    <h1><%= username %>'s Reviews</h1>
+
+    <% if (reviews.length === 0) { %>
+        <p>No reviews yet!</p>
+    <% } else { %>
+        <% reviews.forEach(review => { %>
+            <div class="review">
+                <h3><%= review.movie_title %></h3>
+                <img src="<%= review.movie_image %>" alt="<%= review.movie_title %>" class="movie-image" width="200">
+                <p><strong>Rating:</strong> <%= review.rating %>/5</p>
+                <p><strong>Review:</strong> <%= review.review_text %></p>
+                <p><strong>Reviewed on:</strong> <%= new Date(review.created_at).toLocaleDateString() %></p>
+            </div>
+        <% }); %>
+    <% } %>
+
+    <a href="/">Back to Home</a>
+</body>
+</html>

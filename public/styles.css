@@ -2,11 +2,11 @@ h1 {
     color: chocolate;
 }
 
-.alert-box {
-    background-color: #f44336; /* Red */
-    color: white;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    text-align: center;
+a {
+    color: #f44336;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #d6564d;
 }
