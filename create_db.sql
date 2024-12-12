@@ -25,4 +25,7 @@ CREATE TABLE IF NOT EXISTS reviews (
     FOREIGN KEY (user_id) REFERENCES user_details(id)
 );
 
+INSERT INTO user_details (username, first_name, last_name, email, hashedPassword)
+VALUES ('Triangle', 'Shapes', 'Circle', 'Rectangle@gmail.com', '$2b$10$Iq1cGBpNiI36Z4hJOrqjDuzKnyVZSwP6J8ks.rvCqcCXtQCHOuCFm');
+
 
