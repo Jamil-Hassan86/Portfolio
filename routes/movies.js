@@ -301,9 +301,10 @@ router.post('/:movieId/reviews/edit/:reviewId', async(req, res) => {
             }
         );
     });
-    const basePath = req.originalUrl.split(`${movieId}/reviews/edit`)[0];
+    const basePath = req.url.split(`/${movieId}`)[0];
+    console.log(basePath)
 
-    res.redirect(`${basePath}search`);
+    res.redirect(`${basePath}/movies/search`);
 });
 
 router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
@@ -340,7 +341,8 @@ router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
             }
         });
 
-        const basePath = req.baseUrl.split('/movies')[0];;
+        console.log(req.url)
+        const basePath = req.url.split(`/${movieId}`)[0];
         res.redirect(`${basePath}/movies/search`);
     });
 });
