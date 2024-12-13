@@ -274,13 +274,12 @@ router.get('/:movieId/reviews/edit/:reviewId', (req, res) => {
     });
 });
 
-router.post('/:movieId/reviews/edit/:reviewId', async(req, res) => {
+router.post('/:movieId/reviews/edit/:reviewId',(req, res) => {
     const { review_text, rating, movieImage, movieTitle } = req.body;
     const reviewId = req.params.reviewId; 
     const movieId = req.params.movieId;
     const username = req.session.userId;  
 
-    const userId = await getUserId(username);
 
     //gets the reviews id
     global.db.query('SELECT user_id FROM reviews WHERE id = ?', [reviewId], (err) => {
@@ -301,15 +300,23 @@ router.post('/:movieId/reviews/edit/:reviewId', async(req, res) => {
             }
         );
     });
-    const basePath = req.url.split(`/${movieId}`)[0];
-    console.log(basePath)
+    
+    let host;
 
-    res.redirect(`${basePath}/movies/search`);
+        if(req.get('host') == 'localhost:8000'){
+            host = '';
+        } else{
+            host = '/usr/719';
+        }
+        const basePath = host + req.url.split(`/${movieId}`)[0];
+       
+    
+        res.redirect(`${basePath}/movies/search`);
 });
 
 router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
     const reviewId = req.body.reviewId
-    const movieId = req.body.params
+    const movieId = req.params.movieId
     const userId = req.body.userId
     
 
@@ -341,8 +348,15 @@ router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
             }
         });
 
-        console.log(req.url)
-        const basePath = req.url.split(`/${movieId}`)[0];
+        let host;
+
+        if(req.get('host') == 'localhost:8000'){
+            host = '';
+        } else{
+            host = '/usr/719';
+        }
+        const basePath = host + req.url.split(`/${movieId}/reviews`)[0];
+    
         res.redirect(`${basePath}/movies/search`);
     });
 });
