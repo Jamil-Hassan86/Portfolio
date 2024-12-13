@@ -11,6 +11,7 @@ var mysql = require('mysql2')
 const app = express();
 const port = 8000;
 
+app.set('trust proxy', true);
 
 app.set('view engine', 'ejs');
 
