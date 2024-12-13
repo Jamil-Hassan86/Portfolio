@@ -345,11 +345,13 @@ router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
         });
         let basePath = req.originalUrl.split('/movies')[0];
 
+        const fullBasePath = basePath.startsWith('/') ? basePath : '/' + basePath;
+
     
         const queryString = req.url.split('?')[1] ? `?${req.url.split('?')[1]}` : '';
 
     
-        res.redirect(`${basePath}/movies/search${queryString}`);
+        res.redirect(`${fullBasePath}/movies/search${queryString}`);
     });
 });
 
