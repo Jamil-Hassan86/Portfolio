@@ -19,6 +19,10 @@ async function getUserId(username) {
     });
 }
 
+function getBaseUrl(req) {
+    return req.baseUrl || ''
+}
+
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
         res.redirect('../users/login');  // Redirect to a common login page
@@ -293,58 +297,18 @@ router.post('/:movieId/reviews/edit/:reviewId', async(req, res) => {
                     console.error(err);
                     return res.status(500).send('Error updating review');
                 }
-            // all reviews for a specific movie
-            global.db.query(
-                `SELECT r.review_text, r.rating, r.created_at, u.username, r.id, r.user_id 
-                 FROM reviews r 
-                 JOIN user_details u ON r.user_id = u.id 
-                 WHERE r.movie_id = ?`, 
-                [movieId], 
-                (err, reviews) => {
-                    if (err) {
-                        console.error(err);
-                        return res.status(500).send('Error retrieving reviews');
-                    }
-
-                    global.db.query(
-                        `SELECT AVG(rating) AS avg_rating 
-                         FROM reviews 
-                         WHERE movie_id = ?`, 
-                        [movieId], 
-                        (err, avgResults) => {
-                            if (err) {
-                                console.error(err);
-                                return res.status(500).send('Error calculating average rating');
-                            }
-
-                            
-                            const avgRating = avgResults[0].avg_rating != null ? avgResults[0].avg_rating : 0;
-
-                            // render the reviews page with the reviews and average rating
-                            res.render('reviews', {
-                                reviews,
-                                movieId,
-                                movieImage: movieImage,
-                                movieTitle: movieTitle,
-                                avgRating: avgRating,
-                                userId  
-                            });
-                        }
-                    );
-
-                }
-            );
+                
             }
         );
     });
+    const basePath = req.originalUrl.split('/movies')[0];
+    res.redirect(`${basePath}/movies/search`)
 });
 
 router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
     const reviewId = req.body.reviewId
-    const movieId = req.body.movieId
     const userId = req.body.userId
-    const movieImage = req.body.movieImage
-    const movieTitle = req.body.movieTitle
+    
 
     
 
@@ -372,48 +336,9 @@ router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
                 console.error(err);
                 return res.status(500).send('Error deleting review');
             }
-            // all reviews for a specific movie
-            global.db.query(
-                `SELECT r.review_text, r.rating, r.created_at, u.username, r.id, r.user_id 
-                 FROM reviews r 
-                 JOIN user_details u ON r.user_id = u.id 
-                 WHERE r.movie_id = ?`, 
-                [movieId], 
-                (err, reviews) => {
-                    if (err) {
-                        console.error(err);
-                        return res.status(500).send('Error retrieving reviews');
-                    }
-
-                    global.db.query(
-                        `SELECT AVG(rating) AS avg_rating 
-                         FROM reviews 
-                         WHERE movie_id = ?`, 
-                        [movieId], 
-                        (err, avgResults) => {
-                            if (err) {
-                                console.error(err);
-                                return res.status(500).send('Error calculating average rating');
-                            }
-
-                            
-                            const avgRating = avgResults[0].avg_rating != null ? avgResults[0].avg_rating : 0;
-
-                            // render the reviews page with the reviews and average rating
-                            res.render('reviews', {
-                                reviews,
-                                movieId,
-                                movieImage: movieImage,
-                                movieTitle: movieTitle,
-                                avgRating: avgRating,
-                                userId  
-                            });
-                        }
-                    );
-
-                }
-            );
         });
+        const basePath = req.originalUrl.split('/movies')[0];
+        res.redirect(`${basePath}/movies/search`)
     });
 });
 
