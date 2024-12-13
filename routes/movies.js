@@ -292,7 +292,7 @@ router.post('/:movieId/reviews/edit/:reviewId', (req, res) => {
                 }
 
                 //redirect to the reviews page for the movie
-                res.redirect(`/movies/${movieId}/reviews?title=${encodeURIComponent(movieTitle)}&image=${encodeURIComponent(movieImage)}`);
+                res.redirect(`../movies/${movieId}/reviews?title=${encodeURIComponent(movieTitle)}&image=${encodeURIComponent(movieImage)}`);
             }
         );
     });
@@ -330,7 +330,7 @@ router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
                 return res.status(500).send('Error deleting review');
             }
             //redirect back to movie review page
-            res.redirect(`/movies/${movieId}/reviews?title=${encodeURIComponent(movieTitle)}&image=${encodeURIComponent(movieImage)}`);
+            res.redirect(`../movies/${movieId}/reviews?title=${encodeURIComponent(movieTitle)}&image=${encodeURIComponent(movieImage)}`);
         });
     });
 });
