@@ -301,12 +301,18 @@ router.post('/:movieId/reviews/edit/:reviewId', async(req, res) => {
             }
         );
     });
-    const basePath = req.originalUrl.split('/movies')[0];
-    res.redirect(`${basePath}/movies/search`)
+    let basePath = req.originalUrl.split('/movies')[0];
+
+    
+    const queryString = req.url.split('?')[1] ? `?${req.url.split('?')[1]}` : '';
+
+    
+    res.redirect(`${basePath}/movies/search${queryString}`);
 });
 
 router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
     const reviewId = req.body.reviewId
+    const movieId = req.body.params
     const userId = req.body.userId
     
 
@@ -337,8 +343,13 @@ router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
                 return res.status(500).send('Error deleting review');
             }
         });
-        const basePath = req.originalUrl.split('/movies')[0];
-        res.redirect(`${basePath}/movies/search`)
+        let basePath = req.originalUrl.split('/movies')[0];
+
+    
+        const queryString = req.url.split('?')[1] ? `?${req.url.split('?')[1]}` : '';
+
+    
+        res.redirect(`${basePath}/movies/search${queryString}`);
     });
 });
 
