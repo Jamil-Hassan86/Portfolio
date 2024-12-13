@@ -275,8 +275,10 @@ router.post('/:movieId/reviews/edit/:reviewId', (req, res) => {
     const reviewId = req.params.reviewId; 
     const movieId = req.params.movieId; 
 
+    console.log(req.baseUrl)
     if(req.baseUrl == '/movies'){
         req.baseUrl = '';
+
     }
 
 
