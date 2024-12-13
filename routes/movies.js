@@ -275,6 +275,11 @@ router.post('/:movieId/reviews/edit/:reviewId', (req, res) => {
     const reviewId = req.params.reviewId; 
     const movieId = req.params.movieId; 
 
+    if(req.baseUrl == '/movies'){
+        req.baseUrl = '';
+    }
+
+
     //gets the reviews id
     global.db.query('SELECT user_id FROM reviews WHERE id = ?', [reviewId], (err) => {
         if (err) {
@@ -292,7 +297,7 @@ router.post('/:movieId/reviews/edit/:reviewId', (req, res) => {
                 }
 
                 //redirect to the reviews page for the movie
-                res.redirect(`/movies/${movieId}/reviews?title=${encodeURIComponent(movieTitle)}&image=${encodeURIComponent(movieImage)}`);
+                res.redirect(`${req.baseUrl}/movies/${movieId}/reviews?title=${encodeURIComponent(movieTitle)}&image=${encodeURIComponent(movieImage)}`);
             }
         );
     });
@@ -304,6 +309,12 @@ router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
     const userId = req.body.userId
     const movieImage = req.body.movieImage
     const movieTitle = req.body.movieTitle
+
+    if(req.baseUrl == '/movies'){
+        req.baseUrl = '';
+    }
+
+    
 
     //getting review of user so they can only delete reviews they made
     global.db.query('SELECT user_id FROM reviews WHERE id = ?', [reviewId], (err, results) => {
@@ -330,7 +341,7 @@ router.post('/:movieId/reviews/delete/:reviewId', (req, res) => {
                 return res.status(500).send('Error deleting review');
             }
             //redirect back to movie review page
-            res.redirect(`/movies/${movieId}/reviews?title=${encodeURIComponent(movieTitle)}&image=${encodeURIComponent(movieImage)}`);
+            res.redirect(`${req.baseUrl}/movies/${movieId}/reviews?title=${encodeURIComponent(movieTitle)}&image=${encodeURIComponent(movieImage)}`);
         });
     });
 });
